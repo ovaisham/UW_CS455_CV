@@ -5,6 +5,9 @@ def c_array(values):
     return np.array(values, dtype=np.float32)
 
 class Image:
+    """
+    Image class is a data structure class with data as a Height X Width X No. of channels
+    """
     def __init__(self, data):
         self.data = data
         self.c = data.shape[2] if len(data.shape) == 3 else 1
@@ -16,15 +19,19 @@ class Image:
     def __sub__(self, other):
         return Image(cv2.subtract(self.data, other.data))
 
-    def save(self, filename):
+    def save_image(self, filename):
         cv2.imwrite(filename, self.data)
 
     @staticmethod
-    def load(filename):
+    def load_image(filename):
         return Image(cv2.imread(filename))
     
     def free_data(self):
         self.data.clear()
+    
+    def set_data(self, new_data):
+        if new_data.shape[2]==self.data.shape[2] and new_data[0:2]==[self.h, self.w]:
+            self.data=new_data
     
 def make_image(height:int, width:int, channels:int) -> Image:
     return Image(np.zeros((height, width, channels)))
