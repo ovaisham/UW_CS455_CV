@@ -1,12 +1,17 @@
 import uwimg
 import process_image
+import os
 
 # 1. Getting and setting pixels
-im = uwimg.load_image("data/dog.jpg")
+file_name = os.path.join(os.path.dirname(__file__), 'data/dog.jpg')
+assert os.path.exists(file_name)
+
+#img = cv2.imread(file_name, -1)
+im  = uwimg.Image.load_image(file_name)
 for row in range(im.h):
     for col in range(im.w):
         process_image.set_pixel(im, col, row, 0, 0)
-uwimg.save_image(im, "dog_no_red")
+im.save_image("dog_no_red")
 
 # # 3. Grayscale image
 # im = load_image("data/colorbar.png")
